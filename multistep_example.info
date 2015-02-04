@@ -1,0 +1,3 @@
+name = Пошаговая форма 
+description = Provide ajax example of multistep form.
+core = 7.x
