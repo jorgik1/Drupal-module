@@ -37,13 +37,13 @@ function multistep_example_admin_form_menu($form, &$form_state){
     '#size' => '20',
     '#attributes' =>array('placeholder' => t('E-mail address'))
   );
+  $form['#method'] = 'GET';
+
 $form['actions']['submit']= array(
       '#type' => 'submit', 
       '#value' => 'Save e-mail',       
       '#limit_validation_errors' => array(), 
       '#submit' => array('multistep_example_form'));
-$form_state['storage'] = $form['email'];
-	
   return $form;
 }
 
@@ -53,12 +53,11 @@ $form_state['storage'] = $form['email'];
  */
 function multistep_example_admin_form_submit($form, &$form_state) {
 	global $message;
-  $email_content =  $message;
   $from = 'yuriy.ipcom@gmail.com';
-  $params = array('body' => $email_content);
+  $params = array('body' => $message);
   $key = 'test_email';
-  $to = $form_state['storage'];
-  if (drupal_mail('multistep_example_form', $key, $to, language_default(), $params, $from)) {
+  $to = isset($_GET['email']);
+  if (drupal_mail('multistep_example_form', $key, $to, language_default(), $params, $from,TRUE)) {
     drupal_set_message("Email send");
   }else {
     drupal_set_message("Email not send");
