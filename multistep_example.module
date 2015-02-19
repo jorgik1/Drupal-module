@@ -37,8 +37,9 @@ $form['submit']= array(
 }
 
 function multistep_example_admin_form_submit($form, &$form_state){
-  if (isset($form_state['values']['email'])) {
-    $email = $form_state['values']['email'];
+ global $email;
+  if (isset($_POST['email'])) {
+    $email = $_POST['email'];
   drupal_set_message("Your adress is $email saved");
   } else {
     drupal_set_message("type your e-mail");
@@ -196,7 +197,7 @@ function multistep_example_form_submit($form, &$form_state) {
     $key = 'key';
     $language = 'ru';
     $params = array();
-    $from = 'yuriy.ipcom@gmail.com';
+    $from = variable_get('site_mail');
     $target_email = $email;
     $send = FALSE;
     $mes = drupal_mail($module, $key, $target_email, $language, $params, $from, $send);
