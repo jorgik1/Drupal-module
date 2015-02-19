@@ -1,6 +1,6 @@
 <?php
-/*hook menu
-*/
+/*implements
+ * hook menu*/
 function multistep_example_menu() { 
   $items = array(); 
   $items['multistep_example'] = array(
@@ -20,8 +20,7 @@ function multistep_example_menu() {
   return $items; 
 }
 /*
- * form to add
-*E-mail */
+*form to add E-mail */
 function multistep_example_admin_form_menu($form,&$form_state){
   $form = array();
   $form['email'] = array(
@@ -36,10 +35,12 @@ $form['submit']= array(
       '#submit' => array('multistep_example_admin_form_submit'));
   return $form;
 }
-
+/*
+ * Processing admin form */
 function multistep_example_admin_form_submit($form, &$form_state){
  global $email;
   if (isset($form_state['values']['email'])) {
+    /*save $email */
     $email = variable_set('mail',$form_state['values']['email']);
   drupal_set_message("Your adress is $email saved");
   } else {
@@ -47,7 +48,8 @@ function multistep_example_admin_form_submit($form, &$form_state){
   }
   return $email;
 }
-/*General form*/
+/*
+ * General form */
 function multistep_example_form($form, &$form_state) {
   $form['#prefix'] = '<div id="multistep-example-form-wrapper">';
   $form['#suffix'] = '</div>';
@@ -146,11 +148,13 @@ function multistep_example_form($form, &$form_state) {
   }
   return $form;
 }
-
+/*
+ * ajax processing */
 function multistep_example_ajax_callback($form, $form_state) {
   return $form;
 }
-
+/*
+ * General processing */
 function multistep_example_form_submit($form, &$form_state) {
    global $email;
 /*Save form*/
